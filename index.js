@@ -47,8 +47,9 @@ function displayData(data) {
         
         // Loop through all the word's meanings
         words.meanings.forEach(meaning => {
-            const partsOfSpeech = document.createElement("h4");
+            const partsOfSpeech = document.createElement("h5");
             const unorderedList = document.createElement("ol");
+            partsOfSpeech.classList.add("m-2") // Bootstrap - add margin of 2
             partsOfSpeech.textContent = meaning.partOfSpeech;
             results.append(partsOfSpeech);
             results.append(unorderedList);
