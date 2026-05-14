@@ -6,35 +6,54 @@ const searchButton = document.getElementById("search");
 const synonymList = document.getElementById("synonyms");
 const synonymGroup = document.getElementById("synonym-group")
 
+// Event handler for clicking button
+searchButton.addEventListener("click", async (event) => {
+    await handleEvents(event)
+});
 
-searchButton.addEventListener("click", async () => {
+// Event handler for pressing enter
+wordToDefine.addEventListener("keypress", async (event) => {
+    if (event.key === "Enter") {
+        await handleEvents(event);
+    }
+});
+
+// Function to handle events
+async function handleEvents(event) {
     results.innerHTML = ""; // Clear everything in results when the button is clicked
 
     // Make sure a word was typed in the input box
-    if (wordToDefine.value == ""){
+    if (wordToDefine.value == "") {
         console.log("Please type a word");
-    }
+    } 
     else {
         try {
             const response = await pullData(wordToDefine.value);
             wordToDefine.value = "";
             displayData(response);
-        }
+        } 
         catch (error) {
             wordToDefine.value = "";
             console.error(error);
-        };
-    };
-});
+        }
+    }
+}
 
 // Function to fetch the data from the API 
 async function pullData(word) {
     return fetch(dictionaryAPI + word)
         .then(response => {
-            if (!response.ok) {
-                throw new Error("Bad request")
-            }
-            return response.json()
+          if (!response.ok) {
+            throw new Error("Bad request");
+          }
+          // <----------- TESTING ---------->
+          open(
+            dictionaryAPI + word,
+            "popupWindow",
+            "width=600, height=400, scrollbars=yes",
+          ); // to see full json
+          // <------------------------------>
+          return response.json();
         });
 };
 
@@ -44,16 +63,14 @@ function displayData(data) {
     // Loop through the returned data for each word
     data.forEach(words => {
         const definedWord = document.createElement("h3");
-        definedWord.textContent = `${words.word} - ${words.phonetic}`;
-        results.append(definedWord);
-
+        
         // Pull the audio
         words.phonetics.forEach(sound => {
-            console.log(sound.audio)
-            if (!sound.audio) {
-                // continue;
-            }
+            console.log(sound.text)
+            if (!sound.audio) {}
             else {
+                definedWord.textContent = `${words.word} - ${sound.text}`;
+                results.append(definedWord);
 
                 const playButton = document.createElement("img")
                 const buttonImage = document.createElement("img");
