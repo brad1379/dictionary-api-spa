@@ -1,3 +1,20 @@
 #user-input {
     text-align: center;
 }
+
+.play-button {
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.play-button:active {
+    transform: scale(0.9);
+    opacity: 0.8;
+}
+
+.play-button:hover {
+    opacity: 0.6;
+}
