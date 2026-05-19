@@ -1,20 +1,40 @@
 #user-input {
     text-align: center;
+    max-width: 40%;
 }
 
-.play-button {
+#audio-image{
     margin-left: 5px;
     width: 20px;
     height: 20px;
-    display: inline-block;
-    vertical-align: middle;
+    display: flex;
+    /* vertical-align: middle; */
 }
 
-.play-button:active {
+#audio-image:active {
     transform: scale(0.9);
     opacity: 0.8;
 }
 
-.play-button:hover {
+#audio-image:hover {
     opacity: 0.6;
+}
+
+#error-message {
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
+    text-align: center;
+    font-weight: 550;
+}
+
+#list-item {
+    margin-top: 0.5em;
+    display: flex;
+    /* border: none; */
+    flex-wrap: wrap;
+}
+
+#play-button {
+    background-color: white;
+    border: none;
 }

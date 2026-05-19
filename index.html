@@ -10,17 +10,22 @@
 <body>
     <h1 class="text-center mt-5 mb-4">Wordly</h1>
     <div class="d-flex flex-column align-items-center">
-            <input type="text" id="user-input" class="form-control w-50 p-2" placeholder="Type a word">
-
-            <div class="d-grid col-2 mx-auto">
-                <button id="search" class="btn btn-secondary my-3 p-2">Search</button>
+            <input type="text" id="user-input" class="form-control w-50 p-2" placeholder="Type a word" title="Search a word">
+            <div class="d-grid col-1 mx-auto">
+                <button id="search" title="Search" class="btn btn-secondary my-3 p-2">Search</button>
             </div>
+            <h3 id="no-word" class="no-word d-none">Please input word to search definition</h3>
         </div>
     <div id="results" class="m-4">
+        <h3 id="result-word"></h3>
+        <button id="play-button" class="play-audio d-none">
+            <img src="assets/volume.png" class="audio-image" id="audio-image">
+        </button>
         <ul id="definitions"></ul>
         <div id="synonym-group" class="d-inline">
             <ul id="synonyms" class="list-group list-group-horizontal"></ul>
         </div>
+        <h3 id="error-message" class="error d-none"></h3>
     </div>
     <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
