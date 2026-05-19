@@ -45,7 +45,7 @@ async function handleEvents(event) {
     } 
     else {
         try {
-            const response = await pullData(wordToDefine.value);
+            const response = await pullData(wordToDefine.value.trim());
             displayData(response);
             wordToDefine.value = "";
         } 

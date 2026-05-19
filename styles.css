@@ -38,3 +38,11 @@
     background-color: white;
     border: none;
 }
+
+#no-word {
+    font-style: italic;
+}
+
+/* #list-item:hover {
+    background-color: whitesmoke;
+} */
