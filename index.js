@@ -30,33 +30,31 @@ window.onload = function () {
 
 // Function to handle events
 async function handleEvents(event) {
-    resultWord.textContent = "";
-    definitionList.innerHTML = "";
-    synonymList.innnerHTML = "";
-    synonymGroup.innerHTML = "";
-    playButton.classList.add("d-none")
-    errorMessage.classList.add("d-none")
-    emptyInput.classList.add("d-none")
+  resultWord.textContent = "";
+  definitionList.innerHTML = "";
+  synonymList.innnerHTML = "";
+  synonymGroup.innerHTML = "";
+  playButton.classList.add("d-none"); // add class d-none to remove pronunciation button each search
+  errorMessage.classList.add("d-none"); // add class d-none to prevent displaying error message each search
+  emptyInput.classList.add("d-none"); // add class d-none to prevent displaying empty input message each search 
 
-    // Make sure a word was typed in the input box
-    if (wordToDefine.value == "") {
-        emptyInput.textContent = "Please input word to search definition";
-        emptyInput.classList.remove("d-none")
-    } 
-    else {
-        try {
-            const response = await pullData(wordToDefine.value.trim());
-            displayData(response);
-            wordToDefine.value = "";
-        } 
-        catch (error) {
-            emptyInput.textContent = ""
-            errorMessage.classList.remove("d-none")
-            errorMessage.textContent = error
-            results.append(errorMessage)
-            wordToDefine.value = "";
-        }
+  // Make sure a word was typed in the input box
+  if (wordToDefine.value == "") {
+    emptyInput.textContent = "Please input word to search definition";
+    emptyInput.classList.remove("d-none");
+  } else {
+    try {
+      const response = await pullData(wordToDefine.value.trim());
+      displayData(response);
+      wordToDefine.value = ""; // clear input field
+    } catch (error) {
+      emptyInput.textContent = "";
+      errorMessage.classList.remove("d-none"); // remove d-none to display error message
+      errorMessage.textContent = error;
+      results.append(errorMessage);
+      wordToDefine.value = "";
     }
+  }
 }
 
 // Function to fetch the data from the API 
@@ -77,7 +75,13 @@ function displayData(data) {
     
     // Loop through the returned data for each word
     data.forEach(words => {
-        resultWord.textContent = `${words.word} - ${words.phonetic}`;
+        // If there is no pronunciation then prevent from displaying 'undefined'
+        if (words.phonetic) {
+            resultWord.textContent = `${words.word} - ${words.phonetic}`;
+        }
+        else {
+            resultWord.textContent = words.word;
+        }
 
         // Pull the audio
         const wordWithAudio = words.phonetics.find(word => word.audio);
