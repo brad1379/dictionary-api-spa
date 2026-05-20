@@ -32,7 +32,7 @@ window.onload = function () {
 async function handleEvents(event) {
   resultWord.textContent = "";
   definitionList.innerHTML = "";
-  synonymList.innnerHTML = "";
+  synonymList.innerHTML = "";
   synonymGroup.innerHTML = "";
   playButton.classList.add("d-none"); // add class d-none to remove pronunciation button each search
   errorMessage.classList.add("d-none"); // add class d-none to prevent displaying error message each search
@@ -72,6 +72,8 @@ async function pullData(word) {
 function displayData(data) {
     emptyInput.textContent = ""
     errorMessage.textContent = ""
+    synonymGroup.innerHTML = ""
+    let foundSynonyms = false;
     
     // Loop through the returned data for each word
     data.forEach(words => {
@@ -98,6 +100,7 @@ function displayData(data) {
             };
         }
 
+
         // Loop through all the word's meanings
         words.meanings.forEach((meaning) => {
             const partsOfSpeech = document.createElement("h5");
@@ -115,15 +118,27 @@ function displayData(data) {
             });
 
             // Grab the synonyms
-            meaning.synonyms.forEach((synonym, index) => {
-            const altWords = document.createElement("li");
-            altWords.setAttribute('id', 'list-item')
-            altWords.classList.add("list-group-item", "mb-3");
-            altWords.textContent = synonym;
-            synonymList.append(altWords);
-            });
+            if (meaning.synonyms.length !== 0) {
+                meaning.synonyms.forEach((synonym, index) => {
+                    foundSynonyms = true;
+                    const altWords = document.createElement("li");
+                    altWords.setAttribute('id', 'list-item')
+                    altWords.classList.add("list-group-item", "mb-3");
+                    console.log(synonym)
+                    altWords.textContent = synonym;
+                    synonymList.append(altWords);
+                });
+            }
         });
+
     });
+    // If not synonyms were found, then
+    if (!foundSynonyms) {
+        const displayMessage = document.createElement("p");
+        displayMessage.classList.add("m-3")
+        displayMessage.textContent = "No synonyms to display";
+        synonymList.append(displayMessage);
+    }
     // Add "Synonym" title above the list of synonyms if there are any synonyms
     if(synonymList.children.length > 0) {
         const synonymTitle = document.createElement("h5");
